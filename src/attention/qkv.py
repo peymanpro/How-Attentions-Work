@@ -158,6 +158,43 @@ class QKVProjector:
             )
         )
 
+    def apply_query_key_gradients(
+        self,
+        query_gradient: Matrix,
+        key_gradient: Matrix,
+        learning_rate: float,
+    ) -> None:
+        if not np.isfinite(learning_rate) or learning_rate <= 0.0:
+            raise ValueError(
+                "learning_rate must be positive and finite."
+            )
+
+        expected_shape = (
+            self._model_dimension,
+            self._attention_dimension,
+        )
+
+        if query_gradient.shape != expected_shape:
+            raise ValueError(
+                "Query gradient shape does not match query weights."
+            )
+
+        if key_gradient.shape != expected_shape:
+            raise ValueError(
+                "Key gradient shape does not match key weights."
+            )
+
+        self._query_weights = self._query_weights.add(
+            query_gradient.multiply_scalar(
+                -learning_rate
+            )
+        )
+
+        self._key_weights = self._key_weights.add(
+            key_gradient.multiply_scalar(
+                -learning_rate
+            )
+        )
     def _validate_input(
         self,
         inputs: Matrix,
@@ -167,3 +204,4 @@ class QKVProjector:
                 "Input dimension does not match model dimension: "
                 f"{inputs.columns} != {self._model_dimension}."
             )
+
