@@ -34,6 +34,20 @@ class TokenEmbeddingSequence:
     def embedding_dimension(self) -> int:
         return self._embeddings.columns
 
+    def get_embedding(
+        self,
+        token_id: int,
+    ) -> Matrix:
+        if token_id < 0 or token_id >= self._embeddings.rows:
+            raise ValueError(
+                "token_id is outside the vocabulary."
+            )
+
+        return Matrix(
+            self._embeddings.data[
+                token_id : token_id + 1
+            ]
+        )
     def encode(
         self,
         token_ids: list[int],
@@ -53,3 +67,4 @@ class TokenEmbeddingSequence:
         return Matrix(
             self._embeddings.data[token_ids]
         )
+
