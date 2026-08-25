@@ -101,3 +101,42 @@ def test_qkv_projector_should_reject_wrong_input_dimension() -> None:
 
     with pytest.raises(ValueError):
         projector.project(inputs)
+def test_qkv_projector_should_update_weights() -> None:
+    projector = QKVProjector(
+        model_dimension=2,
+        attention_dimension=2,
+        seed=42,
+    )
+
+    before_query = projector.query_weights.data
+    before_key = projector.key_weights.data
+    before_value = projector.value_weights.data
+
+    gradient = Matrix.from_values(
+        [
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]
+    )
+
+    projector.apply_gradients(
+        query_gradient=gradient,
+        key_gradient=gradient,
+        value_gradient=gradient,
+        learning_rate=0.1,
+    )
+
+    np.testing.assert_allclose(
+        projector.query_weights.data,
+        before_query - 0.1 * gradient.data,
+    )
+
+    np.testing.assert_allclose(
+        projector.key_weights.data,
+        before_key - 0.1 * gradient.data,
+    )
+
+    np.testing.assert_allclose(
+        projector.value_weights.data,
+        before_value - 0.1 * gradient.data,
+    )
