@@ -1,0 +1,34 @@
+﻿{
+  "vocabulary": [
+    "red",
+    "sky",
+    "blue",
+    "ocean",
+    "query-red",
+    "query-blue"
+  ],
+  "examples": [
+    {
+      "input": [
+        "red",
+        "sky",
+        "blue",
+        "ocean",
+        "query-red"
+      ],
+      "query_position": 4,
+      "target_value_position": 1
+    },
+    {
+      "input": [
+        "red",
+        "sky",
+        "blue",
+        "ocean",
+        "query-blue"
+      ],
+      "query_position": 4,
+      "target_value_position": 3
+    }
+  ]
+}
