@@ -110,3 +110,28 @@ def test_output_projection_should_reject_wrong_input_dimension() -> None:
 
     with pytest.raises(ValueError):
         projection.forward(inputs)
+def test_output_projection_should_update_weights() -> None:
+    projection = OutputProjection(
+        input_dimension=2,
+        vocabulary_size=3,
+        seed=42,
+    )
+
+    before = projection.weights.data
+
+    gradient = Matrix.from_values(
+        [
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ]
+    )
+
+    projection.apply_gradient(
+        gradient=gradient,
+        learning_rate=0.1,
+    )
+
+    np.testing.assert_allclose(
+        projection.weights.data,
+        before - 0.1 * gradient.data,
+    )
