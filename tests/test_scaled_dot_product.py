@@ -138,3 +138,81 @@ def test_identical_query_and_key_should_prefer_matching_positions() -> None:
 def test_attention_should_reject_invalid_key_dimension() -> None:
     with pytest.raises(ValueError):
         ScaledDotProductAttention(0)
+def test_causal_attention_should_not_attend_to_future_positions() -> None:
+    qkv = QKV(
+        query=Matrix.from_values(
+            [
+                [1.0, 0.0],
+                [0.0, 1.0],
+            ]
+        ),
+        key=Matrix.from_values(
+            [
+                [1.0, 0.0],
+                [0.0, 1.0],
+            ]
+        ),
+        value=Matrix.from_values(
+            [
+                [10.0, 0.0],
+                [0.0, 20.0],
+            ]
+        ),
+    )
+
+    result = ScaledDotProductAttention(
+        key_dimension=2
+    ).forward(
+        qkv,
+        causal=True,
+    )
+
+    weights = result.weights.data
+
+    np.testing.assert_allclose(
+        weights[0],
+        np.array([1.0, 0.0]),
+    )
+
+    assert weights[1, 0] > 0.0
+    assert weights[1, 1] > 0.0
+
+    np.testing.assert_allclose(
+        np.sum(weights, axis=1),
+        np.ones(2),
+    )
+
+
+def test_non_causal_attention_should_allow_future_positions() -> None:
+    qkv = QKV(
+        query=Matrix.from_values(
+            [
+                [1.0, 0.0],
+                [0.0, 1.0],
+            ]
+        ),
+        key=Matrix.from_values(
+            [
+                [1.0, 0.0],
+                [0.0, 1.0],
+            ]
+        ),
+        value=Matrix.from_values(
+            [
+                [10.0, 0.0],
+                [0.0, 20.0],
+            ]
+        ),
+    )
+
+    result = ScaledDotProductAttention(
+        key_dimension=2
+    ).forward(
+        qkv,
+        causal=False,
+    )
+
+    weights = result.weights.data
+
+    assert weights[0, 1] > 0.0
+    assert weights[1, 0] > 0.0
