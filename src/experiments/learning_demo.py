@@ -79,6 +79,21 @@ def main() -> None:
         f"Attention Change: "
         f"{result.mean_attention_change:.6f}"
     )
+    print(
+        f"Wq Change:        {result.q_weight_change:.6f}"
+    )
+
+    print(
+        f"Wk Change:        {result.k_weight_change:.6f}"
+    )
+
+    print(
+        f"Wv Change:        {result.v_weight_change:.6f}"
+    )
+
+    print(
+        f"Wout Change:      {result.output_weight_change:.6f}"
+    )
 
     print_attention(
         "Attention Before Training",
@@ -93,3 +108,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

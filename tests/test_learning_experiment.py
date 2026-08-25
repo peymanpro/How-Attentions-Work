@@ -55,3 +55,19 @@ def test_experiment_should_keep_causal_attention_structure() -> None:
     assert weights[1, 3] == 0.0
 
     assert weights[2, 3] == 0.0
+def test_experiment_should_report_parameter_changes() -> None:
+    result = AttentionLearningExperiment().run(
+        input_token_ids=[0, 1, 2, 3],
+        target_token_ids=[1, 2, 3, 4],
+        vocabulary_size=5,
+        embedding_dimension=8,
+        attention_dimension=8,
+        epochs=200,
+        learning_rate=0.01,
+        seed=42,
+    )
+
+    assert result.q_weight_change > 0.0
+    assert result.k_weight_change > 0.0
+    assert result.v_weight_change > 0.0
+    assert result.output_weight_change > 0.0

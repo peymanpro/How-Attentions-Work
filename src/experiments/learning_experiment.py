@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from src.attention.attention_snapshot import AttentionSnapshot
+from src.attention.diagnostics import parameter_change
 from src.attention.inspection import AttentionInspector
 from src.attention.output_projection import OutputProjection
 from src.attention.qkv import QKVProjector
@@ -18,6 +19,10 @@ class AttentionLearningExperimentResult:
     initial_attention: AttentionSnapshot
     final_attention: AttentionSnapshot
     mean_attention_change: float
+    q_weight_change: float
+    k_weight_change: float
+    v_weight_change: float
+    output_weight_change: float
 
 
 class AttentionLearningExperiment:
@@ -65,6 +70,11 @@ class AttentionLearningExperiment:
             causal=True,
         )
 
+        initial_query_weights = projector.query_weights
+        initial_key_weights = projector.key_weights
+        initial_value_weights = projector.value_weights
+        initial_output_weights = output_projection.weights
+
         trainer = AttentionTrainer(
             sequence=sequence,
             projector=projector,
@@ -84,6 +94,11 @@ class AttentionLearningExperiment:
             causal=True,
         )
 
+        final_query_weights = projector.query_weights
+        final_key_weights = projector.key_weights
+        final_value_weights = projector.value_weights
+        final_output_weights = output_projection.weights
+
         return AttentionLearningExperimentResult(
             initial_loss=history[0].average_loss,
             final_loss=history[-1].average_loss,
@@ -93,5 +108,21 @@ class AttentionLearningExperiment:
                 initial_attention.mean_absolute_change(
                     final_attention
                 )
+            ),
+            q_weight_change=parameter_change(
+                initial_query_weights,
+                final_query_weights,
+            ),
+            k_weight_change=parameter_change(
+                initial_key_weights,
+                final_key_weights,
+            ),
+            v_weight_change=parameter_change(
+                initial_value_weights,
+                final_value_weights,
+            ),
+            output_weight_change=parameter_change(
+                initial_output_weights,
+                final_output_weights,
             ),
         )
