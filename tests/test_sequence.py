@@ -51,3 +51,29 @@ def test_sequence_encoder_should_reject_invalid_token_id() -> None:
 
     with pytest.raises(ValueError):
         encoder.encode([1, 10])
+def test_sequence_encoder_should_return_individual_embedding() -> None:
+    encoder = TokenEmbeddingSequence(
+        vocabulary_size=5,
+        embedding_dimension=4,
+        seed=42,
+    )
+
+    sequence = encoder.encode([2])
+
+    individual = encoder.get_embedding(2)
+
+    assert individual.shape == (1, 4)
+
+    assert (
+        individual.data == sequence.data
+    ).all()
+
+
+def test_sequence_encoder_should_reject_invalid_embedding_id() -> None:
+    encoder = TokenEmbeddingSequence(
+        vocabulary_size=5,
+        embedding_dimension=4,
+    )
+
+    with pytest.raises(ValueError):
+        encoder.get_embedding(5)
