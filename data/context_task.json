@@ -1,0 +1,19 @@
+﻿{
+  "vocabulary": [
+    "red",
+    "blue",
+    "likes",
+    "sky",
+    "ocean"
+  ],
+  "examples": [
+    {
+      "input": ["red", "likes"],
+      "target": "sky"
+    },
+    {
+      "input": ["blue", "likes"],
+      "target": "ocean"
+    }
+  ]
+}
