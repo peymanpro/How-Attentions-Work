@@ -78,6 +78,27 @@ class OutputProjection:
             probabilities=probabilities,
         )
 
+    def apply_gradient(
+        self,
+        gradient: Matrix,
+        learning_rate: float,
+    ) -> None:
+        if not np.isfinite(learning_rate) or learning_rate <= 0.0:
+            raise ValueError(
+                "learning_rate must be positive and finite."
+            )
+
+        if gradient.shape != self._weights.shape:
+            raise ValueError(
+                "Gradient shape must match output projection weights."
+            )
+
+        self._weights = self._weights.add(
+            gradient.multiply_scalar(
+                -learning_rate
+            )
+        )
+
     @staticmethod
     def _softmax_rows(
         matrix: Matrix,
