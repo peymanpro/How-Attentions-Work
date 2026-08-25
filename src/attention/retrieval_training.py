@@ -82,10 +82,11 @@ class QKRetrievalTrainer:
                     ]
                 )
 
-                target = (
-                    self._sequence.get_embedding(
-                        example.target_value_position
-                    )
+                target = Matrix(
+                    qkv.value.data[
+                        example.target_value_position :
+                        example.target_value_position + 1
+                    ]
                 )
 
                 loss = self._loss.calculate(
@@ -152,4 +153,3 @@ class QKRetrievalTrainer:
             )
 
         return history
-

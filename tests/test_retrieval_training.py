@@ -95,3 +95,29 @@ def test_qk_retrieval_training_should_produce_one_result_per_epoch() -> None:
     assert [item.epoch for item in history] == list(
         range(1, 11)
     )
+def test_retrieval_target_should_exist_in_value_space() -> None:
+    sequence = TokenEmbeddingSequence(
+        vocabulary_size=6,
+        embedding_dimension=8,
+        seed=42,
+    )
+
+    projector = QKVProjector(
+        model_dimension=8,
+        attention_dimension=8,
+        seed=42,
+    )
+
+    inputs = sequence.encode(
+        [0, 1, 2, 3, 4]
+    )
+
+    qkv = projector.project(inputs)
+
+    target = qkv.value.data[1:2]
+
+    assert target.shape == (1, 8)
+
+    assert (
+        target != sequence.get_embedding(1).data
+    ).any()
