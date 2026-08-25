@@ -81,3 +81,58 @@ def test_softmax_should_reject_non_finite_input() -> None:
                 ]
             )
         )
+from src.attention.softmax import masked_softmax
+
+
+def test_masked_softmax_should_ignore_masked_values() -> None:
+    values = np.array([1.0, 2.0, 3.0])
+    mask = np.array([True, True, False])
+
+    result = masked_softmax(
+        values,
+        mask,
+    )
+
+    assert result[2] == 0.0
+
+    np.testing.assert_allclose(
+        np.sum(result),
+        1.0,
+    )
+
+
+def test_masked_softmax_should_normalize_only_unmasked_values() -> None:
+    values = np.array([1.0, 2.0, 3.0])
+    mask = np.array([True, False, False])
+
+    result = masked_softmax(
+        values,
+        mask,
+    )
+
+    np.testing.assert_allclose(
+        result,
+        np.array([1.0, 0.0, 0.0]),
+    )
+
+
+def test_masked_softmax_should_reject_all_false_mask() -> None:
+    values = np.array([1.0, 2.0])
+    mask = np.array([False, False])
+
+    with pytest.raises(ValueError):
+        masked_softmax(
+            values,
+            mask,
+        )
+
+
+def test_masked_softmax_should_reject_wrong_mask_shape() -> None:
+    values = np.array([1.0, 2.0])
+    mask = np.array([True])
+
+    with pytest.raises(ValueError):
+        masked_softmax(
+            values,
+            mask,
+        )
