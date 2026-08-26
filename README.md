@@ -19,7 +19,7 @@ It is trying to answer a more fundamental engineering question:
 Attention is often introduced with a compact equation:
 
 ```math
-\operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right)V
 ```
 
 That equation is elegant, but by itself it hides most of the engineering and learning mechanics.
@@ -130,13 +130,13 @@ V = XW_V
 The similarity between queries and keys is computed as:
 
 ```math
-S = \frac{QK^T}{\sqrt{d_k}}
+S=\frac{QK^T}{\sqrt{d_k}}
 ```
 
 The scores are converted into probabilities with Softmax:
 
 ```math
-A = \operatorname{softmax}(S)
+A=\mathrm{softmax}(S)
 ```
 
 The final attention representation is:
@@ -220,7 +220,7 @@ we derive gradients for both the attention weights and the value matrix.
 For:
 
 ```math
-A = \operatorname{softmax}(S)
+A=\mathrm{softmax}(S)
 ```
 
 we propagate gradients through Softmax to obtain gradients for the score matrix.
@@ -228,7 +228,7 @@ we propagate gradients through Softmax to obtain gradients for the score matrix.
 For:
 
 ```math
-S = \frac{QK^T}{\sqrt{d_k}}
+S=\frac{QK^T}{\sqrt{d_k}}
 ```
 
 we obtain gradients for `Q` and `K`.
