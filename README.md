@@ -18,9 +18,9 @@ It is trying to answer a more fundamental engineering question:
 
 Attention is often introduced with a compact equation:
 
-\[
+```math
 \operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-\]
+```
 
 That equation is elegant, but by itself it hides most of the engineering and learning mechanics.
 
@@ -115,35 +115,35 @@ The implementation deliberately avoids hiding these mechanisms behind a high-lev
 
 For an input matrix `X`, three learned projections create different views of the same representation:
 
-\[
+```math
 Q = XW_Q
-\]
+```
 
-\[
+```math
 K = XW_K
-\]
+```
 
-\[
+```math
 V = XW_V
-\]
+```
 
 The similarity between queries and keys is computed as:
 
-\[
+```math
 S = \frac{QK^T}{\sqrt{d_k}}
-\]
+```
 
 The scores are converted into probabilities with Softmax:
 
-\[
+```math
 A = \operatorname{softmax}(S)
-\]
+```
 
 The final attention representation is:
 
-\[
+```math
 H = AV
-\]
+```
 
 This gives the complete forward path:
 
@@ -168,9 +168,9 @@ The dot product `QK^T` can grow with the dimensionality of the key vectors.
 
 The attention implementation therefore uses:
 
-\[
+```math
 \frac{QK^T}{\sqrt{d_k}}
-\]
+```
 
 This keeps score magnitudes in a more useful numerical range before Softmax.
 
@@ -211,25 +211,25 @@ The project does not stop at a forward implementation.
 
 For:
 
-\[
+```math
 H = AV
-\]
+```
 
 we derive gradients for both the attention weights and the value matrix.
 
 For:
 
-\[
+```math
 A = \operatorname{softmax}(S)
-\]
+```
 
 we propagate gradients through Softmax to obtain gradients for the score matrix.
 
 For:
 
-\[
+```math
 S = \frac{QK^T}{\sqrt{d_k}}
-\]
+```
 
 we obtain gradients for `Q` and `K`.
 
@@ -241,17 +241,17 @@ Q=XW_Q,\quad K=XW_K,\quad V=XW_V
 
 we obtain:
 
-\[
+```math
 \frac{\partial L}{\partial W_Q}=X^T\frac{\partial L}{\partial Q}
-\]
+```
 
-\[
+```math
 \frac{\partial L}{\partial W_K}=X^T\frac{\partial L}{\partial K}
-\]
+```
 
-\[
+```math
 \frac{\partial L}{\partial W_V}=X^T\frac{\partial L}{\partial V}
-\]
+```
 
 The gradients are then applied with ordinary gradient descent.
 
@@ -277,11 +277,11 @@ Numerical gradient <--------+
 
 The numerical approximation uses:
 
-\[
+```math
 \frac{\partial L}{\partial x}
 \approx
 \frac{L(x+\epsilon)-L(x-\epsilon)}{2\epsilon}
-\]
+```
 
 The analytical and numerical gradients agree within the test tolerances.
 
