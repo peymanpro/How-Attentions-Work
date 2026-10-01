@@ -235,9 +235,9 @@ we obtain gradients for `Q` and `K`.
 
 For the projection layers:
 
-\[
+$
 Q=XW_Q,\quad K=XW_K,\quad V=XW_V
-\]
+$
 
 we obtain:
 
