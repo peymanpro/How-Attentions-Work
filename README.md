@@ -178,8 +178,6 @@ The repository provides a small Self-Attention composition around the verified s
 
 Causal self-attention is supported through the same masking path rather than through a separate implementation.
 
-![Self-attention and cross-attention relationship](docs/assets/self-cross-attention.svg)
-
 ---
 
 ## Cross-Attention
@@ -386,6 +384,17 @@ src/
 
 tests/
 └── ...
+
+docs/
+├── ATTENTION_TAXONOMY.md
+└── assets/
+    ├── attention-flow.gif
+    ├── attention-flow.svg
+    ├── self-cross-attention.svg
+    ├── masked-local-attention.svg
+    ├── multi-head-attention.svg
+    ├── kv-sharing-attention.svg
+    └── additive-attention.svg
 ~~~
 
 The original single-head learning path remains the verified foundation. Higher-level variants reuse that foundation instead of duplicating the attention algorithm.
