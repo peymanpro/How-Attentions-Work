@@ -56,6 +56,8 @@ class MultiHeadAttention:
         self._num_heads = num_heads
         self._head_dimension = query_dimension // num_heads
         self._key_value_dimension = key_value_dimension
+        self._self_projectors: tuple[QKVProjector, ...]
+        self._cross_projectors: tuple[CrossAttentionProjector, ...]
 
         if key_value_dimension is None:
             self._self_projectors = tuple(
@@ -66,7 +68,7 @@ class MultiHeadAttention:
                 )
                 for index in range(num_heads)
             )
-            self._cross_projectors: tuple[CrossAttentionProjector, ...] = ()
+            self._cross_projectors = ()
         else:
             self._self_projectors = ()
             self._cross_projectors = tuple(

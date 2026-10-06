@@ -53,9 +53,7 @@ class ScaledDotProductAttention:
             qkv.query.rows,
             qkv.key.rows,
             causal=causal,
-            attention_mask=None
-            if attention_mask is None
-            else attention_mask,
+            attention_mask=attention_mask,
         )
 
         weights = self._softmax_rows(
