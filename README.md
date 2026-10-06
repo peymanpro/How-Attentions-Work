@@ -20,11 +20,28 @@ The goal is not to reproduce a production Transformer library.
 
 The goal is to make the mathematics, data flow, masking, gradient propagation, parameter sharing, and design trade-offs explicit enough to inspect and verify.
 
+<p align="center">
+  <img src="docs/assets/attention-flow.gif" alt="Animated overview of the attention computation flow" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/attention-flow.svg" alt="Scaled dot-product attention" width="49%" />
+  <img src="docs/assets/self-cross-attention.svg" alt="Self-attention and cross-attention" width="49%" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/multi-head-attention.svg" alt="Multi-head attention" width="49%" />
+  <img src="docs/assets/kv-sharing-attention.svg" alt="Multi-query and grouped-query attention" width="49%" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/masked-local-attention.svg" alt="Causal and local attention" width="49%" />
+  <img src="docs/assets/additive-attention.svg" alt="Additive attention" width="49%" />
+</p>
+
 [Attention taxonomy](docs/ATTENTION_TAXONOMY.md)
 
-![Attention computation flow](docs/assets/attention-flow.gif)
 
-> **Visual guide:** the animated overview shows the core data flow; the diagrams below map that same foundation onto the main attention variants.
 
 ---
 
@@ -151,7 +168,6 @@ $$
 
 The implementation keeps these operations visible instead of delegating them to a deep-learning framework.
 
-![Scaled dot-product attention](docs/assets/attention-flow.svg)
 
 The core supports:
 
@@ -195,7 +211,6 @@ $$
 
 This makes the distinction between self-attention and cross-attention explicit at the projection boundary.
 
-![Self-attention and cross-attention relationship](docs/assets/self-cross-attention.svg)
 
 The implementation supports different query and key/value sequence lengths and different input dimensions.
 
@@ -217,7 +232,6 @@ The current implementation focuses on the forward mechanism and structural prope
 
 A complete trainable multi-head backward path is intentionally left for a later phase so that the shared concatenation and output-projection gradients can be derived and verified independently.
 
-![Multi-head attention](docs/assets/multi-head-attention.svg)
 
 ---
 
@@ -249,7 +263,6 @@ These implementations make parameter sharing explicit.
 
 For MQA and GQA, the current scope is forward computation and structural verification. Their shared-parameter backward and training paths are not claimed to be complete yet.
 
-![Multi-Query and Grouped-Query Attention](docs/assets/kv-sharing-attention.svg)
 
 ---
 
@@ -259,7 +272,6 @@ Additive attention uses a learned nonlinear compatibility score rather than the 
 
 The implementation keeps the scoring function explicit and reuses the same masking abstraction. It is currently forward-focused; its backward and training path are not claimed as part of the verified learning core.
 
-![Additive attention](docs/assets/additive-attention.svg)
 
 ---
 
@@ -280,7 +292,6 @@ The implementation expresses locality as an attention mask and reuses the same c
 
 This keeps masking as a reusable concern rather than creating another attention kernel.
 
-![Causal and local attention](docs/assets/masked-local-attention.svg)
 
 ---
 
@@ -400,10 +411,6 @@ docs/
 The original single-head learning path remains the verified foundation. Higher-level variants reuse that foundation instead of duplicating the attention algorithm.
 
 ---
-
-## Visual Assets
-
-The README uses a small animated GIF for the main workflow and static SVG diagrams for the individual attention families. The diagrams are intentionally compact so the mathematics stays readable instead of becoming decorative.
 
 ## Run the Attention Family Demo
 
