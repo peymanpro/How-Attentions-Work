@@ -1,3 +1,7 @@
+from src.attention.alternatives.additive import (
+    AdditiveAttention,
+    AdditiveAttentionResult,
+)
 from src.attention.backward import (
     AttentionGradients,
     ScaledDotProductAttentionBackward,
