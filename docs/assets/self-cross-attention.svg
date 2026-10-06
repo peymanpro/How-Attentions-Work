@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <rect width="900" height="300" fill="#f8fafc"/>
+  <text x="32" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Self-Attention vs Cross-Attention</text>
+  <text x="32" y="68" font-family="Arial, sans-serif" font-size="16" fill="#475569">The distinction is where Q, K, and V come from</text>
+  <rect x="32" y="95" width="390" height="165" rx="16" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+<text x="227" y="122" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#2563eb">Self-Attention</text>
+<rect x="58" y="165" width="70" height="46" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="93" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">X</text>
+<rect x="230" y="145" width="65" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="262.5" y="173" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Q</text>
+<rect x="230" y="193" width="65" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="262.5" y="221" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">K</text>
+<rect x="230" y="241" width="65" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="262.5" y="269" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">V</text>
+<line x1="129" y1="188" x2="220" y2="166" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<line x1="129" y1="188" x2="220" y2="214" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<line x1="129" y1="188" x2="220" y2="260" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<text x="58" y="238" font-family="Arial, sans-serif" font-size="14" fill="#475569">Q, K, V ← same sequence X</text>
+<rect x="478" y="95" width="390" height="165" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="673" y="122" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Cross-Attention</text>
+<rect x="500" y="150" width="75" height="46" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="537.5" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Xq</text>
+<rect x="500" y="220" width="75" height="46" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="537.5" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Xm</text>
+<rect x="735" y="140" width="65" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="767.5" y="168" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Q</text>
+<rect x="735" y="226" width="75" height="42" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="772.5" y="254" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">K,V</text>
+<line x1="576" y1="173" x2="725" y2="161" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<line x1="576" y1="243" x2="725" y2="247" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<text x="610" y="204" font-family="Arial, sans-serif" font-size="14" fill="#475569">different source sequences</text>
+</svg>
