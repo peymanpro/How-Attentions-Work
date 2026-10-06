@@ -22,6 +22,10 @@ The goal is to make the mathematics, data flow, masking, gradient propagation, p
 
 [Attention taxonomy](docs/ATTENTION_TAXONOMY.md)
 
+![Attention computation flow](docs/assets/attention-flow.gif)
+
+> **Visual guide:** the animated overview shows the core data flow; the diagrams below map that same foundation onto the main attention variants.
+
 ---
 
 ## Why This Project Exists
@@ -147,6 +151,8 @@ $$
 
 The implementation keeps these operations visible instead of delegating them to a deep-learning framework.
 
+![Scaled dot-product attention](docs/assets/attention-flow.svg)
+
 The core supports:
 
 - stable Softmax
@@ -172,6 +178,8 @@ The repository provides a small Self-Attention composition around the verified s
 
 Causal self-attention is supported through the same masking path rather than through a separate implementation.
 
+![Self-attention and cross-attention relationship](docs/assets/self-cross-attention.svg)
+
 ---
 
 ## Cross-Attention
@@ -188,6 +196,8 @@ V=YW_V
 $$
 
 This makes the distinction between self-attention and cross-attention explicit at the projection boundary.
+
+![Self-attention and cross-attention relationship](docs/assets/self-cross-attention.svg)
 
 The implementation supports different query and key/value sequence lengths and different input dimensions.
 
@@ -208,6 +218,8 @@ Each head has its own Q/K/V projections and attention distribution.
 The current implementation focuses on the forward mechanism and structural properties.
 
 A complete trainable multi-head backward path is intentionally left for a later phase so that the shared concatenation and output-projection gradients can be derived and verified independently.
+
+![Multi-head attention](docs/assets/multi-head-attention.svg)
 
 ---
 
@@ -239,6 +251,8 @@ These implementations make parameter sharing explicit.
 
 For MQA and GQA, the current scope is forward computation and structural verification. Their shared-parameter backward and training paths are not claimed to be complete yet.
 
+![Multi-Query and Grouped-Query Attention](docs/assets/kv-sharing-attention.svg)
+
 ---
 
 ## Additive / Bahdanau Attention
@@ -246,6 +260,8 @@ For MQA and GQA, the current scope is forward computation and structural verific
 Additive attention uses a learned nonlinear compatibility score rather than the scaled dot product.
 
 The implementation keeps the scoring function explicit and reuses the same masking abstraction. It is currently forward-focused; its backward and training path are not claimed as part of the verified learning core.
+
+![Additive attention](docs/assets/additive-attention.svg)
 
 ---
 
@@ -265,6 +281,8 @@ token 3:     2 3
 The implementation expresses locality as an attention mask and reuses the same core attention operation.
 
 This keeps masking as a reusable concern rather than creating another attention kernel.
+
+![Causal and local attention](docs/assets/masked-local-attention.svg)
 
 ---
 
@@ -373,6 +391,10 @@ tests/
 The original single-head learning path remains the verified foundation. Higher-level variants reuse that foundation instead of duplicating the attention algorithm.
 
 ---
+
+## Visual Assets
+
+The README uses a small animated GIF for the main workflow and static SVG diagrams for the individual attention families. The diagrams are intentionally compact so the mathematics stays readable instead of becoming decorative.
 
 ## Run the Attention Family Demo
 
