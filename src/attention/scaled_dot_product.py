@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import numpy as np
+
 from src.attention.masking import resolve_attention_mask
 from src.attention.qkv import QKV
 from src.attention.softmax import masked_softmax, softmax
@@ -35,7 +37,7 @@ class ScaledDotProductAttention:
         self,
         qkv: QKV,
         causal: bool = False,
-        attention_mask: object | None = None,
+        attention_mask: np.ndarray | None = None,
     ) -> AttentionResult:
         self._validate_shapes(qkv)
 
@@ -74,21 +76,17 @@ class ScaledDotProductAttention:
     @staticmethod
     def _softmax_rows(
         matrix: Matrix,
-        mask: object,
+        mask: np.ndarray,
     ) -> Matrix:
         data = matrix.data
         allowed = mask
 
-        result = __import__("numpy").zeros_like(data)
+        result = np.zeros_like(data)
 
         for row_index in range(data.shape[0]):
-            row_mask = __import__("numpy").asarray(
-                allowed[row_index],
-                dtype=bool,
-            )
             result[row_index] = masked_softmax(
                 data[row_index],
-                row_mask,
+                allowed[row_index],
             )
 
         return Matrix(result)

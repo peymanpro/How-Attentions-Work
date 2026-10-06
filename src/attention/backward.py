@@ -32,7 +32,7 @@ class ScaledDotProductAttentionBackward:
         forward_result: AttentionResult,
         output_gradient: Matrix,
         causal: bool = False,
-        attention_mask: object | None = None,
+        attention_mask: np.ndarray | None = None,
     ) -> AttentionGradients:
         self._validate_shapes(
             qkv,
