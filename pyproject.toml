@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "how-attention-works"
-version = "0.1.0"
-description = "A from-scratch exploration of how attention works and learns."
+version = "0.2.0"
+description = "A from-scratch exploration of attention mechanisms, learning, and efficient variants."
 requires-python = ">=3.12"
 dependencies = [
     "numpy>=2.2,<3"
