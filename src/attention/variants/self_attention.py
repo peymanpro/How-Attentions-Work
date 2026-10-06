@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from src.attention.qkv import QKVProjector
+from src.attention.qkv import QKV, QKVProjector
 from src.attention.scaled_dot_product import (
     AttentionResult,
     ScaledDotProductAttention,
@@ -14,7 +14,7 @@ from src.math.matrix import Matrix
 
 @dataclass(frozen=True)
 class SelfAttentionResult:
-    qkv: object
+    qkv: QKV
     attention: AttentionResult
 
 
