@@ -44,18 +44,20 @@ def main() -> None:
         seed=42,
     ).forward(tokens, causal=True)
 
-    grouped_result = GroupedQueryAttention(
+    grouped_attention = GroupedQueryAttention(
         model_dimension=4,
         num_query_heads=4,
         num_key_value_heads=2,
         seed=42,
-    ).forward(tokens, causal=True)
+    )
+    grouped_result = grouped_attention.forward(tokens, causal=True)
 
-    multi_query_result = MultiQueryAttention(
+    multi_query_attention = MultiQueryAttention(
         model_dimension=4,
         num_query_heads=4,
         seed=42,
-    ).forward(tokens, causal=True)
+    )
+    multi_query_result = multi_query_attention.forward(tokens, causal=True)
 
     local_result = LocalSelfAttention(
         model_dimension=4,
@@ -80,11 +82,11 @@ def main() -> None:
     )
     print(
         f"Grouped-Query output:        {grouped_result.output.shape} "
-        f"({grouped_result.num_key_value_heads} K/V groups)"
+        f"({grouped_attention.num_key_value_heads} K/V groups)"
     )
     print(
         f"Multi-Query output:          {multi_query_result.output.shape} "
-        f"({multi_query_result.num_key_value_heads} shared K/V head)"
+        f"({multi_query_attention.num_key_value_heads} shared K/V head)"
     )
     print(f"Local Self-Attention output: {local_result.attention.output.shape}")
 
