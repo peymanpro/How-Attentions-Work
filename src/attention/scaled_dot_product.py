@@ -1,9 +1,8 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 
-import numpy as np
-
+from src.attention.masking import resolve_attention_mask
 from src.attention.qkv import QKV
 from src.attention.softmax import masked_softmax, softmax
 from src.math.matrix import Matrix
@@ -36,18 +35,30 @@ class ScaledDotProductAttention:
         self,
         qkv: QKV,
         causal: bool = False,
+        attention_mask: object | None = None,
     ) -> AttentionResult:
+        self._validate_shapes(qkv)
+
         scores = qkv.query.multiply(
             qkv.key.transpose()
         )
 
         scaled_scores = scores.multiply_scalar(
-            1.0 / np.sqrt(self._key_dimension)
+            1.0 / self._key_dimension**0.5
+        )
+
+        mask = resolve_attention_mask(
+            qkv.query.rows,
+            qkv.key.rows,
+            causal=causal,
+            attention_mask=None
+            if attention_mask is None
+            else attention_mask,
         )
 
         weights = self._softmax_rows(
             scaled_scores,
-            causal=causal,
+            mask,
         )
 
         output = weights.multiply(
@@ -63,37 +74,40 @@ class ScaledDotProductAttention:
     @staticmethod
     def _softmax_rows(
         matrix: Matrix,
-        causal: bool,
+        mask: object,
     ) -> Matrix:
         data = matrix.data
-        rows, columns = data.shape
+        allowed = mask
 
-        result = np.zeros_like(data)
+        result = __import__("numpy").zeros_like(data)
 
-        for row_index in range(rows):
-            if causal:
-                allowed = np.arange(columns) <= row_index
-            else:
-                allowed = np.ones(
-                    columns,
-                    dtype=bool,
-                )
-
-            if causal and row_index >= columns:
-                raise ValueError(
-                    "Causal attention requires compatible "
-                    "query and key sequence lengths."
-                )
-
-            result[row_index] = (
-                masked_softmax(
-                    data[row_index],
-                    allowed,
-                )
-                if causal
-                else softmax(
-                    data[row_index]
-                )
+        for row_index in range(data.shape[0]):
+            row_mask = __import__("numpy").asarray(
+                allowed[row_index],
+                dtype=bool,
+            )
+            result[row_index] = masked_softmax(
+                data[row_index],
+                row_mask,
             )
 
         return Matrix(result)
+
+    def _validate_shapes(
+        self,
+        qkv: QKV,
+    ) -> None:
+        if qkv.query.columns != self._key_dimension:
+            raise ValueError(
+                "Query dimension must match key_dimension."
+            )
+
+        if qkv.key.columns != self._key_dimension:
+            raise ValueError(
+                "Key dimension must match key_dimension."
+            )
+
+        if qkv.key.rows != qkv.value.rows:
+            raise ValueError(
+                "Key and value sequence lengths must match."
+            )
