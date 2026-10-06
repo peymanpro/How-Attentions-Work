@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import numpy as np
-
 from src.attention.masking import sliding_window_mask
 from src.attention.qkv import QKVProjector
 from src.attention.variants.self_attention import (

@@ -6,7 +6,7 @@ import numpy as np
 
 from src.attention.masking import resolve_attention_mask
 from src.attention.qkv import QKV
-from src.attention.softmax import masked_softmax, softmax
+from src.attention.softmax import masked_softmax
 from src.math.matrix import Matrix
 
 
