@@ -40,3 +40,32 @@ def resolve_attention_mask(
         )
 
     return resolved
+
+
+def sliding_window_mask(
+    sequence_length: int,
+    window_size: int,
+    *,
+    causal: bool = True,
+) -> np.ndarray:
+    if sequence_length <= 0:
+        raise ValueError("sequence_length must be positive.")
+
+    if window_size <= 0:
+        raise ValueError("window_size must be positive.")
+
+    positions = np.arange(sequence_length)
+    distance = np.abs(
+        positions[:, None] - positions[None, :]
+    )
+    mask = distance < window_size
+
+    if causal:
+        mask &= positions[None, :] <= positions[:, None]
+
+    if not np.all(np.any(mask, axis=1)):
+        raise ValueError(
+            "Every query position must have at least one allowed key."
+        )
+
+    return mask
