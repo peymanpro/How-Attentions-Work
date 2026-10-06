@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from src.attention.masking import sliding_window_mask
+from src.attention.qkv import QKVProjector
 from src.attention.variants.self_attention import (
     SelfAttention,
     SelfAttentionResult,
@@ -32,7 +33,7 @@ class LocalSelfAttention:
         return self._window_size
 
     @property
-    def projector(self) -> object:
+    def projector(self) -> QKVProjector:
         return self._self_attention.projector
 
     def forward(
