@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.attention.grouped_query import (
+from src.attention.efficiency.grouped_query import (
     GroupedQueryAttention,
     GroupedQueryAttentionResult,
 )
