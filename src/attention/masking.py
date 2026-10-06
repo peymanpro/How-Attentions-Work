@@ -42,6 +42,24 @@ def resolve_attention_mask(
     return resolved
 
 
+def causal_attention_mask(
+    query_length: int,
+    key_length: int | None = None,
+) -> np.ndarray:
+    resolved_key_length = (
+        query_length
+        if key_length is None
+        else key_length
+    )
+
+    if query_length <= 0 or resolved_key_length <= 0:
+        raise ValueError("Attention sequence lengths must be positive.")
+
+    query_positions = np.arange(query_length)[:, None]
+    key_positions = np.arange(resolved_key_length)[None, :]
+    return key_positions <= query_positions
+
+
 def sliding_window_mask(
     sequence_length: int,
     window_size: int,
