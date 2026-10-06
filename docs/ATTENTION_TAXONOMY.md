@@ -72,13 +72,24 @@ Status: implemented.
 
 The current MQA/GQA implementations focus on the forward mechanism and structural properties. Training and backward propagation are intentionally deferred until the shared-parameter gradient path is developed and verified.
 
-## 6. How the mechanisms relate
+## 6. Alternative scoring mechanisms
+
+### Additive / Bahdanau Attention
+
+Instead of a scaled dot product, additive attention scores a query-key pair with a learned nonlinear compatibility function.
+
+Status: implemented, forward-focused.
+
+The current implementation exposes the scoring mechanism and masking behavior. Its backward and training path are intentionally separate from the verified scaled dot-product learning core.
+
+## 7. How the mechanisms relate
 
 Scaled Dot-Product Attention
 → source relationship: Self / Cross
 → composition: Multi-Head
 → masking: Causal / Local
 → KV sharing: MQA / GQA
+→ alternative scoring: Additive / Bahdanau
 
 This taxonomy keeps implementations small enough to inspect while preserving the mathematical relationships between variants.
 

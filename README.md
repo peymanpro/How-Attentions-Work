@@ -14,6 +14,7 @@ The project starts from the mathematical primitive of scaled dot-product attenti
 - Multi-Head Attention
 - Multi-Query Attention (MQA)
 - Grouped-Query Attention (GQA)
+- Additive / Bahdanau Attention
 
 The goal is not to reproduce a production Transformer library.
 
@@ -110,6 +111,7 @@ The repository is organized around relationships between mechanisms rather than 
 | Composition | Multi-Head Attention | Implemented, forward-focused |
 | KV sharing | Multi-Query Attention | Implemented, forward-focused |
 | KV sharing | Grouped-Query Attention | Implemented, forward-focused |
+| Alternative scoring | Additive / Bahdanau Attention | Implemented, forward-focused |
 
 The key relationship is:
 
@@ -239,6 +241,14 @@ For MQA and GQA, the current scope is forward computation and structural verific
 
 ---
 
+## Additive / Bahdanau Attention
+
+Additive attention uses a learned nonlinear compatibility score rather than the scaled dot product.
+
+The implementation keeps the scoring function explicit and reuses the same masking abstraction. It is currently forward-focused; its backward and training path are not claimed as part of the verified learning core.
+
+---
+
 ## Local Attention
 
 Local attention restricts each query to a bounded neighborhood.
@@ -306,6 +316,7 @@ The test suite covers:
 - multi-head structure
 - local attention
 - MQA / GQA structure
+- additive attention structure
 
 The project intentionally treats numerical gradient checking as a first-class correctness tool.
 
@@ -330,6 +341,10 @@ src/
 │   ├── masking.py
 │   ├── qkv.py
 │   ├── scaled_dot_product.py
+│   │
+│   ├── alternatives/
+│   │   ├── __init__.py
+│   │   └── additive.py
 │   │
 │   ├── variants/
 │   │   ├── self_attention.py
