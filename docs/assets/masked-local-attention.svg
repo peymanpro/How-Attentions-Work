@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <rect width="900" height="300" fill="#f8fafc"/>
+  <text x="32" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Causal and Local Attention</text>
+  <text x="32" y="68" font-family="Arial, sans-serif" font-size="16" fill="#475569">A reusable mask changes visibility without changing the attention kernel</text>
+  <rect x="40" y="105" width="820" height="48" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+   <text x="450" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#2563eb">full</text>
+<text x="180" y="136" font-family="Arial, sans-serif" font-size="15" fill="#0f172a">query 3 → keys [0 1 2 3 4 5 6]</text>
+<text x="635" y="136" font-family="Arial, sans-serif" font-size="14" fill="#475569">every position visible</text>
+<rect x="40" y="165" width="820" height="48" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="450" y="196" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">causal</text>
+<text x="180" y="196" font-family="Arial, sans-serif" font-size="15" fill="#0f172a">query 3 → keys [0 1 2 3]</text>
+<text x="635" y="196" font-family="Arial, sans-serif" font-size="14" fill="#475569">future positions hidden</text>
+<rect x="40" y="225" width="820" height="48" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="450" y="256" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">local</text>
+<text x="180" y="256" font-family="Arial, sans-serif" font-size="15" fill="#0f172a">query 3 → keys [2 3 4]</text>
+<text x="635" y="256" font-family="Arial, sans-serif" font-size="14" fill="#475569">bounded sliding neighborhood</text>
+</svg>

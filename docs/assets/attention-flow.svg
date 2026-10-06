@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <rect width="900" height="300" fill="#f8fafc"/>
+  <text x="32" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Scaled Dot-Product Attention</text>
+  <text x="32" y="68" font-family="Arial, sans-serif" font-size="16" fill="#475569">The shared mathematical path used by the core implementation</text>
+  <rect x="30" y="110" width="78" height="50" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+   <text x="69" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#2563eb">Q</text>
+<line x1="112" y1="135" x2="150" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="154" y="110" width="78" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="193" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">K</text>
+<line x1="236" y1="135" x2="274" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="278" y="110" width="90" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="323" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">QKᵀ</text>
+<line x1="372" y1="135" x2="410" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="414" y="110" width="86" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="457" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">scale</text>
+<line x1="504" y1="135" x2="542" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="546" y="110" width="78" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="585" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">mask</text>
+<line x1="628" y1="135" x2="666" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="670" y="110" width="92" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="716" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">softmax</text>
+<line x1="766" y1="135" x2="804" y2="135" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round"/>
+<rect x="808" y="110" width="62" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+   <text x="839" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">A</text>
+<text x="32" y="215" font-family="Arial, sans-serif" font-size="16" fill="#475569">S = QKᵀ / √dₖ  →  A = softmax(S)  →  H = AV</text>
+<text x="32" y="250" font-family="Arial, sans-serif" font-size="14" fill="#10b981">Masking stays explicit and reusable across variants.</text>
+</svg>
